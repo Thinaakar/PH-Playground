@@ -1,0 +1,1531 @@
+{
+  "mode": "namespace",
+  "namespace": "user-monstarx-philippines",
+  "namespaceStatus": "ready",
+  "tools": [
+    {
+      "tool": "mcp_auth",
+      "description": "Authenticate this MCP server so its tools can be used.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    {
+      "tool": "ph_address_search",
+      "description": "Search Philippine addresses, place names, and landmarks using OpenStreetMap Nominatim. No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Philippine address or place name, for example 'Intramuros' or 'Ayala Avenue Makati'."
+          },
+          "limit": {
+            "default": 10,
+            "description": "Maximum results to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_air_quality",
+      "description": "Get hourly air quality (PM2.5, PM10, NO2, O3, SO2, CO, European AQI) for a starter city code. No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "area_code": {
+            "default": "manila",
+            "description": "Starter city code, for example 'manila' for Manila.",
+            "type": "string"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_air_temperature",
+      "description": "Get hourly air temperature readings for a starter city code (no API key required).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "area_code": {
+            "default": "manila",
+            "description": "Starter city code, for example 'manila' for Manila.",
+            "type": "string"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_airports",
+      "description": "List starter Philippine airports with IATA/ICAO codes and coordinates. Local catalog, not a live CAAP registry.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "tool": "ph_banks",
+      "description": "Search a starter directory of major Philippine banks and SWIFT codes. Not an official BSP API.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "description": "Optional name/code filter, for example 'BDO' or 'Land Bank'.",
+            "type": "string"
+          },
+          "limit": {
+            "default": 20,
+            "description": "Maximum rows to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_barangays",
+      "description": "List barangays for a city or municipality PSGC (for example City of Manila = 133900000). No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "city_code": {
+            "default": "133900000",
+            "description": "9-digit city/municipality PSGC, for example '133900000' for City of Manila.",
+            "type": "string"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_bsp_finance",
+      "description": "Get a USD/PHP (or other) exchange rate. Community feed, not an official Bangko Sentral ng Pilipinas series. No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "default": "USD",
+            "description": "Base currency, for example 'USD'.",
+            "type": "string"
+          },
+          "to": {
+            "default": "PHP",
+            "description": "Quote currency, for example 'PHP'.",
+            "type": "string"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_bus_stops",
+      "description": "Search nearby bus stops and stations via OpenStreetMap. Live OSM data — not live GTFS jeepney/EDSA Carousel feeds.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90,
+            "description": "Latitude, for example 14.5995."
+          },
+          "longitude": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180,
+            "description": "Longitude, for example 120.9842."
+          },
+          "radius_m": {
+            "default": 1500,
+            "description": "Search radius in meters.",
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 10000
+          },
+          "limit": {
+            "default": 20,
+            "description": "Maximum stops to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "required": [
+          "latitude",
+          "longitude"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_cities",
+      "description": "List cities and municipalities for a province or region PSGC. Use region_code for NCR (no provinces). No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "province_code": {
+            "description": "9-digit province PSGC, for example '072200000' for Cebu.",
+            "type": "string"
+          },
+          "region_code": {
+            "default": "130000000",
+            "description": "9-digit region PSGC used when province_code is omitted. Default NCR = 130000000.",
+            "type": "string"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_crypto_php",
+      "description": "Get CoinGecko spot prices quoted in Philippine pesos. No API key required for this simple endpoint.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "ids": {
+            "default": "bitcoin,ethereum",
+            "description": "Comma-separated CoinGecko ids, for example 'bitcoin,ethereum'.",
+            "type": "string"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_dataset_metadata",
+      "description": "Alias of ph_dataset_show for Singapore-style naming. Get HDX package metadata by id/name.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "description": "CKAN package id or name, for example 'cod-ab-phl'."
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_dataset_query",
+      "description": "Query tabular HDX datastore records by resource_id (CKAN datastore_search). No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "resource_id": {
+            "type": "string",
+            "minLength": 1,
+            "description": "CKAN resource id that has datastore enabled."
+          },
+          "limit": {
+            "default": 10,
+            "description": "Maximum records to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "offset": {
+            "default": 0,
+            "description": "Record offset for pagination.",
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "q": {
+            "description": "Optional full-text query across datastore fields.",
+            "type": "string"
+          },
+          "filters": {
+            "description": "Optional JSON filters string, for example '{\"col\":\"value\"}'.",
+            "type": "string"
+          },
+          "sort": {
+            "description": "Optional sort expression, for example 'col asc'.",
+            "type": "string"
+          },
+          "fields": {
+            "description": "Optional comma-separated field list to return.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "resource_id"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_dataset_show",
+      "description": "Get full HDX dataset metadata and resources by package id or name. No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "description": "CKAN package id or name, for example 'cod-ab-phl'."
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_datasets_search",
+      "description": "Search HDX Philippines open datasets via CKAN package_search. No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Search keyword, for example 'typhoon', 'population', or 'earthquake'."
+          },
+          "rows": {
+            "default": 10,
+            "description": "Number of datasets to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          },
+          "start": {
+            "default": 0,
+            "description": "Result offset for pagination.",
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991
+          },
+          "fq": {
+            "description": "Optional CKAN filter query. Defaults to 'groups:phl'.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_disease_reports",
+      "description": "Search HDX Philippines datasets for infectious-disease related open data (dengue, malaria, etc.). No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "default": "dengue",
+            "description": "Search keyword, for example 'dengue', 'malaria', or 'health'.",
+            "type": "string"
+          },
+          "rows": {
+            "default": 10,
+            "description": "Number of datasets to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_earthquake_list",
+      "description": "List recent USGS earthquakes inside the Philippine bounding box. Not an official PHIVOLCS bulletin. No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "default": 20,
+            "description": "Maximum earthquake events to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_elevation",
+      "description": "Get elevation (meters) for a latitude/longitude using Open-Meteo. No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90,
+            "description": "Latitude, for example 14.5995 for Manila."
+          },
+          "longitude": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180,
+            "description": "Longitude, for example 120.9842 for Manila."
+          }
+        },
+        "required": [
+          "latitude",
+          "longitude"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_evacuation_shelters",
+      "description": "List nearby evacuation / emergency assembly points from OpenStreetMap. Provide lat/lon. No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90,
+            "description": "Latitude, for example 14.5995 for Manila."
+          },
+          "longitude": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180,
+            "description": "Longitude, for example 120.9842 for Manila."
+          },
+          "type": {
+            "default": "evacuation",
+            "description": "'evacuation' = shelters / assembly points, 'emergency' = emergency assembly points only.",
+            "type": "string",
+            "enum": [
+              "evacuation",
+              "emergency"
+            ]
+          },
+          "radius_m": {
+            "default": 3000,
+            "description": "Search radius in meters.",
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 15000
+          },
+          "limit": {
+            "default": 50,
+            "description": "Maximum shelters to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200
+          }
+        },
+        "required": [
+          "latitude",
+          "longitude"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_ferry_terminals",
+      "description": "Search nearby ferry terminals via OpenStreetMap. Live OSM data — not an official PPA/schedule API.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90,
+            "description": "Latitude, for example 14.5995."
+          },
+          "longitude": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180,
+            "description": "Longitude, for example 120.9842."
+          },
+          "radius_m": {
+            "default": 5000,
+            "description": "Search radius in meters.",
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 15000
+          },
+          "limit": {
+            "default": 20,
+            "description": "Maximum terminals to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "required": [
+          "latitude",
+          "longitude"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_fire_stations",
+      "description": "Search nearby fire stations via OpenStreetMap Overpass. Live OSM data — not a BFP official directory.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90,
+            "description": "Latitude, for example 14.5995."
+          },
+          "longitude": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180,
+            "description": "Longitude, for example 120.9842."
+          },
+          "radius_m": {
+            "default": 3000,
+            "description": "Search radius in meters.",
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 10000
+          },
+          "limit": {
+            "default": 20,
+            "description": "Maximum stations to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "required": [
+          "latitude",
+          "longitude"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_flood",
+      "description": "Get GloFAS river-discharge forecast for a Philippine coordinate via Open-Meteo Flood. Not an official PAGASA flood bulletin.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "default": 14.65,
+            "description": "Latitude, for example 14.65 for Marikina.",
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90
+          },
+          "longitude": {
+            "default": 121.1,
+            "description": "Longitude, for example 121.1 for Marikina.",
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180
+          },
+          "forecast_days": {
+            "default": 7,
+            "description": "Forecast horizon in days.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 92
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_fuel_stations",
+      "description": "Search nearby fuel stations via OpenStreetMap. OSM POIs — not Department of Energy pump prices.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90,
+            "description": "Latitude, for example 14.5995."
+          },
+          "longitude": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180,
+            "description": "Longitude, for example 120.9842."
+          },
+          "radius_m": {
+            "default": 2000,
+            "description": "Search radius in meters.",
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 10000
+          },
+          "limit": {
+            "default": 20,
+            "description": "Maximum stations to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "required": [
+          "latitude",
+          "longitude"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_geocode",
+      "description": "Convert a Philippine address or place name to latitude/longitude using Nominatim.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Philippine address or place name to geocode."
+          },
+          "limit": {
+            "default": 5,
+            "description": "Maximum coordinate matches to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_gold_price",
+      "description": "Get the spot gold (XAU) price in USD. Convert to PHP with ph_bsp_finance. Not a Bangko Sentral series.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "tool": "ph_historical_weather",
+      "description": "Get daily historical weather (Open-Meteo archive) for a Philippine coordinate. Live no-key JSON.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "default": 14.5995,
+            "description": "Latitude, for example 14.5995 for Manila.",
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90
+          },
+          "longitude": {
+            "default": 120.9842,
+            "description": "Longitude, for example 120.9842 for Manila.",
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180
+          },
+          "start_date": {
+            "description": "Start date YYYY-MM-DD. Defaults to 7 days ago.",
+            "type": "string"
+          },
+          "end_date": {
+            "description": "End date YYYY-MM-DD. Defaults to today.",
+            "type": "string"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_hospitals",
+      "description": "Search nearby hospitals and clinics via OpenStreetMap. OSM community data — not an official DOH directory.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90,
+            "description": "Latitude, for example 14.5995."
+          },
+          "longitude": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180,
+            "description": "Longitude, for example 120.9842."
+          },
+          "radius_m": {
+            "default": 2000,
+            "description": "Search radius in meters.",
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 10000
+          },
+          "limit": {
+            "default": 20,
+            "description": "Maximum facilities to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "required": [
+          "latitude",
+          "longitude"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_id_format",
+      "description": "Check TIN / SSS / PhilHealth number shape only. Does not verify BIR, SSS, or PhilHealth membership.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "enum": [
+              "tin",
+              "sss",
+              "philhealth"
+            ],
+            "description": "Which ID format to check."
+          },
+          "value": {
+            "type": "string",
+            "minLength": 9,
+            "description": "ID number, with or without dashes."
+          }
+        },
+        "required": [
+          "kind",
+          "value"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_long_weekend",
+      "description": "List long-weekend windows for a calendar year via Nager.Date. No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "default": 2026,
+            "description": "Calendar year, for example 2026.",
+            "type": "integer",
+            "minimum": 1970,
+            "maximum": 2100
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_lto_plate",
+      "description": "Decode a 2014-series plate format to a likely issuing region. Local parser only — not an LTO registration lookup.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "plate": {
+            "type": "string",
+            "minLength": 5,
+            "description": "Plate number, for example 'NBC 1234'."
+          }
+        },
+        "required": [
+          "plate"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_marine",
+      "description": "Get wave height, direction, and period for Philippine coastal coordinates via Open-Meteo Marine. No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "default": 14.5995,
+            "description": "Latitude, for example 14.5995 for Manila Bay.",
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90
+          },
+          "longitude": {
+            "default": 120.9842,
+            "description": "Longitude, for example 120.9842 for Manila Bay.",
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180
+          },
+          "forecast_days": {
+            "default": 2,
+            "description": "Forecast horizon in days.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 7
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_metar",
+      "description": "Get the latest METAR observation for a Philippine airport (IATA or ICAO, default NAIA RPLL). No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "airport": {
+            "default": "RPLL",
+            "description": "IATA or ICAO code, for example 'MNL', 'RPLL', 'CEB', or 'RPVM'.",
+            "type": "string"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_metro_stations",
+      "description": "List starter LRT-1, LRT-2, MRT-3, and PNR station coordinates. Not live GTFS or official timetables.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "line": {
+            "description": "Optional line filter.",
+            "type": "string",
+            "enum": [
+              "lrt1",
+              "lrt2",
+              "mrt3",
+              "pnr"
+            ]
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_mobile_network",
+      "description": "Identify the original Globe/Smart/DITO prefix of a mobile number. Local table only — number portability is not applied.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "phone": {
+            "type": "string",
+            "minLength": 4,
+            "description": "Mobile number or prefix, for example '09171234567' or '+63917...'."
+          }
+        },
+        "required": [
+          "phone"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_natural_events",
+      "description": "NASA EONET open natural events (storms, volcanoes, wildfires) inside the Philippine bounding box. Not official PAGASA/PHIVOLCS.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "default": 20,
+            "description": "Maximum events to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_news",
+      "description": "Get latest headlines from Rappler, Philstar, or Inquirer RSS (via rss2json). No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "default": "rappler",
+            "description": "News source slug.",
+            "type": "string",
+            "enum": [
+              "rappler",
+              "philstar",
+              "inquirer"
+            ]
+          },
+          "limit": {
+            "default": 10,
+            "description": "Maximum headlines to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_next_holidays",
+      "description": "List upcoming Philippine public holidays from today via Nager.Date. No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "tool": "ph_occurrences",
+      "description": "Live GBIF occurrence records geofiltered to country=PH. No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "description": "Optional text filter, for example 'eagle' or 'coral'.",
+            "type": "string"
+          },
+          "limit": {
+            "default": 10,
+            "description": "Maximum records to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_parse_psgc",
+      "description": "Slice a 9-digit PSGC code into region/province/city/barangay codes. Format only — use ph_regions for names.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 9,
+            "description": "9-digit PSGC, for example '133900000'."
+          }
+        },
+        "required": [
+          "code"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_pharmacies",
+      "description": "Search nearby pharmacies via OpenStreetMap. OSM community data — not an official FDA/DOH directory.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90,
+            "description": "Latitude, for example 14.5995."
+          },
+          "longitude": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180,
+            "description": "Longitude, for example 120.9842."
+          },
+          "radius_m": {
+            "default": 2000,
+            "description": "Search radius in meters.",
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 10000
+          },
+          "limit": {
+            "default": 20,
+            "description": "Maximum pharmacies to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "required": [
+          "latitude",
+          "longitude"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_place_search",
+      "description": "Live Open-Meteo geocoding for Philippine place names (countryCode=PH). Complements Nominatim ph_geocode.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 2,
+            "description": "Place name, for example 'Cebu' or 'Baguio'."
+          },
+          "limit": {
+            "default": 5,
+            "description": "Maximum places to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 20
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_police_stations",
+      "description": "Search nearby police stations via OpenStreetMap. OSM POIs — not PNP crime statistics.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90,
+            "description": "Latitude, for example 14.5995."
+          },
+          "longitude": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180,
+            "description": "Longitude, for example 120.9842."
+          },
+          "radius_m": {
+            "default": 3000,
+            "description": "Search radius in meters.",
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 10000
+          },
+          "limit": {
+            "default": 20,
+            "description": "Maximum stations to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "required": [
+          "latitude",
+          "longitude"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_postal_code",
+      "description": "Convert a 4-digit Philippine ZIP code to place name and coordinates via Zippopotam.us. No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "zipcode": {
+            "type": "string",
+            "minLength": 4,
+            "description": "Philippine postal code, for example '1000' (Manila)."
+          }
+        },
+        "required": [
+          "zipcode"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_prayer_schedule",
+      "description": "Get Muslim prayer times for a Philippine city via Aladhan (default Manila). Not an official NCMF bulletin.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "city": {
+            "default": "Manila",
+            "description": "City name, for example 'Manila', 'Marawi', or 'Cotabato'.",
+            "type": "string"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_provinces",
+      "description": "List Philippine provinces. Omit region_code for all provinces, or pass a region PSGC (NCR has no provinces). No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "region_code": {
+            "description": "Optional 9-digit region PSGC, for example '040000000' for CALABARZON. Omit to list all provinces.",
+            "type": "string"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_psa_catalog",
+      "description": "Browse PSA OpenSTAT PX-Web folders/tables (no key). This lists the catalog; it is not a live crime or fuel API.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "default": "DB",
+            "description": "PX-Web path, for example 'DB' or a child id returned by a previous call.",
+            "type": "string"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_psa_query",
+      "description": "Live PSA OpenSTAT PX-Web datastore query (json-stat2). Uses the first value of each variable to keep the cube small.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "default": "DB/2E/AFC/0012E6CPHB0.px",
+            "description": "PX table path ending in .px from ph_psa_catalog.",
+            "type": "string"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_psa_table",
+      "description": "Live PSA OpenSTAT PX-Web table metadata (variables/values). Pass a .px path from ph_psa_catalog.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "default": "DB/2E/AFC/0012E6CPHB0.px",
+            "description": "PX table path ending in .px, for example 'DB/2E/AFC/0012E6CPHB0.px'.",
+            "type": "string"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_pse_quote",
+      "description": "Get a Philippine Stock Exchange quote via the unofficial PHISIX community feed. Not an official PSE API.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "ticker": {
+            "default": "BDO",
+            "description": "PSE ticker, for example 'BDO', 'SM', 'ALI', or 'TEL'.",
+            "type": "string"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_public_holidays",
+      "description": "List Philippine public holidays for a calendar year via Nager.Date. No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "default": 2026,
+            "description": "Calendar year, for example 2026.",
+            "type": "integer",
+            "minimum": 1970,
+            "maximum": 2100
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_rainfall",
+      "description": "Get hourly rainfall readings for a starter city code (no API key required).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "area_code": {
+            "default": "manila",
+            "description": "Starter city code, for example 'manila' for Manila.",
+            "type": "string"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_regions",
+      "description": "List all Philippine regions with PSGC codes (for example NCR = 130000000). No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "tool": "ph_relative_humidity",
+      "description": "Get hourly relative humidity readings for a starter city code (no API key required).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "area_code": {
+            "default": "manila",
+            "description": "Starter city code, for example 'manila' for Manila.",
+            "type": "string"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_reverse_geocode",
+      "description": "Convert latitude/longitude to a Philippine address using Nominatim. No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90,
+            "description": "Latitude, for example 14.5995 for Manila."
+          },
+          "longitude": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180,
+            "description": "Longitude, for example 120.9842 for Manila."
+          }
+        },
+        "required": [
+          "latitude",
+          "longitude"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_schools",
+      "description": "Search nearby schools, colleges, and universities via OpenStreetMap. OSM community data — not an official DepEd/CHED directory.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90,
+            "description": "Latitude, for example 14.5995."
+          },
+          "longitude": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180,
+            "description": "Longitude, for example 120.9842."
+          },
+          "radius_m": {
+            "default": 2000,
+            "description": "Search radius in meters.",
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 10000
+          },
+          "limit": {
+            "default": 20,
+            "description": "Maximum schools to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "required": [
+          "latitude",
+          "longitude"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_species",
+      "description": "Search species names via GBIF (live, no key). Not limited to endemic-only records.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "minLength": 2,
+            "description": "Species or common-name query, for example 'tarsier' or 'maya'."
+          },
+          "limit": {
+            "default": 10,
+            "description": "Maximum rows to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "required": [
+          "query"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_sunrise",
+      "description": "Get sunrise, sunset, and civil twilight for a Philippine coordinate. Timestamps are UTC (Asia/Manila is UTC+8).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "default": 14.5995,
+            "description": "Latitude, for example 14.5995 for Manila.",
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90
+          },
+          "longitude": {
+            "default": 120.9842,
+            "description": "Longitude, for example 120.9842 for Manila.",
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_tourism_spots",
+      "description": "Search nearby tourism spots (attractions, museums, viewpoints, etc.) via OpenStreetMap Overpass. No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "latitude": {
+            "type": "number",
+            "minimum": -90,
+            "maximum": 90,
+            "description": "Latitude, for example 14.5995."
+          },
+          "longitude": {
+            "type": "number",
+            "minimum": -180,
+            "maximum": 180,
+            "description": "Longitude, for example 120.9842."
+          },
+          "radius_m": {
+            "default": 1500,
+            "description": "Search radius in meters.",
+            "type": "integer",
+            "minimum": 100,
+            "maximum": 10000
+          },
+          "limit": {
+            "default": 20,
+            "description": "Maximum spots to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "required": [
+          "latitude",
+          "longitude"
+        ],
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_tsunami_list",
+      "description": "List recent USGS events in the Philippine box with tsunami=1. Not an official PHIVOLCS tsunami bulletin.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "limit": {
+            "default": 20,
+            "description": "Maximum tsunami-flagged events to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_universities",
+      "description": "Search a starter Higher Education Institution catalog (UP, Ateneo, DLSU, UST, etc.). Not an official CHED registry.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "description": "Optional name/city filter, for example 'Cebu' or 'Ateneo'.",
+            "type": "string"
+          },
+          "limit": {
+            "default": 20,
+            "description": "Maximum rows to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_uv_index",
+      "description": "Get hourly UV index readings for a starter city code (no API key required).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "area_code": {
+            "default": "manila",
+            "description": "Starter city code, for example 'manila' for Manila.",
+            "type": "string"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_volcanoes",
+      "description": "List well-known Philippine volcanoes with coordinates. Local catalog — not a live PHIVOLCS alert level feed.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "description": "Optional name/province filter, for example 'Mayon' or 'Negros'.",
+            "type": "string"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_weather_24h",
+      "description": "Get 24-hour forecast (temperature, humidity, wind, rain, weather code) for a starter city code.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "area_code": {
+            "default": "manila",
+            "description": "Starter city code, for example 'manila' for Manila.",
+            "type": "string"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_weather_4day",
+      "description": "Get 4-day forecast (conditions, temperature range, precipitation sum) for a starter city code.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "area_code": {
+            "default": "manila",
+            "description": "Starter city code, for example 'manila' for Manila.",
+            "type": "string"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_weather_areas",
+      "description": "List starter forecast cities (for example Manila = manila). PAGASA TenDay JSON needs a token, so these codes feed Open-Meteo. No API key required.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "tool": "ph_weather_overview",
+      "description": "Get a daily weather overview for a starter city code (Open-Meteo, Asia/Manila). Not an official PAGASA bulletin.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "area_code": {
+            "default": "manila",
+            "description": "Starter city code, for example 'manila', 'cebu', or 'davao'.",
+            "type": "string"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_weather_warnings",
+      "description": "Extract heavy-rain / thunderstorm slots from the Open-Meteo forecast. Not an official PAGASA warning.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "area_code": {
+            "default": "manila",
+            "description": "Starter city code, for example 'manila'.",
+            "type": "string"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_weather_week_overview",
+      "description": "Get a 7-day weather overview for a starter city code (Open-Meteo, Asia/Manila).",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "area_code": {
+            "default": "manila",
+            "description": "Starter city code, for example 'manila'.",
+            "type": "string"
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    },
+    {
+      "tool": "ph_worldbank",
+      "description": "World Bank open data for PHL (population, GDP, CPI, etc.). Default is population. Common ids: SP.POP.TOTL, NY.GDP.MKTP.CD, NY.GDP.PCAP.CD, FP.CPI.TOTL.ZG, SL.UEM.TOTL.ZS, SP.DYN.LE00.IN.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "indicator": {
+            "default": "SP.POP.TOTL",
+            "description": "World Bank indicator id, for example 'SP.POP.TOTL' or 'NY.GDP.MKTP.CD'.",
+            "type": "string"
+          },
+          "per_page": {
+            "default": 10,
+            "description": "Most recent observations to return.",
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 50
+          }
+        },
+        "$schema": "http://json-schema.org/draft-07/schema#"
+      }
+    }
+  ]
+}

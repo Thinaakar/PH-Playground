@@ -1,0 +1,13 @@
+{
+  "name": "ph-mcp-playground",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MonstarX Philippines MCP — live playground and API tutorial (static site).",
+  "scripts": {
+    "start": "node server.js",
+    "build": "python build/build.py"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
