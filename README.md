@@ -9,19 +9,13 @@ Same design system as the Japan / India MCP playgrounds — Philippines tools an
 
 ---
 
-## Run locally & deploy
+## Run locally
 
 ```bash
 npm start           # serves public/ on http://localhost:8080  (respects $PORT)
 ```
 
 Live **Run** on this site posts to same-origin `/mcp`, which `server.js` proxies to local PH-MCP (`http://127.0.0.1:8789`, override with `MCP_URL`) and falls back to staging. Start the Worker with `npm run dev` in `../PH-MCP`. Direct browser calls to staging also work when that host is up (CORS is open on the Worker).
-
-**Deploy to [Railway](https://railway.app):**
-
-```bash
-railway up --ci
-```
 
 **Regenerate the page** after editing tool metadata or `build/build.py`:
 
@@ -41,7 +35,6 @@ To point live **Run** at a different MCP, set `MCP_URL` for the proxy, or open t
 ├── philippines-mcp-playground.html    # standalone copy
 ├── server.js                          # static server + /health + /mcp proxy
 ├── package.json
-├── railway.json
 ├── build/
 │   ├── build.py                       # HTML generator
 │   ├── data.min.json                  # 68 ph_* tools + example payloads

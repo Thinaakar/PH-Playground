@@ -1,5 +1,5 @@
 // Minimal, dependency-free static server for the MonstarX Philippines MCP playground.
-// Serves ./public, respects Railway's $PORT, exposes /health, and proxies POST /mcp
+// Serves ./public, respects $PORT, exposes /health, and proxies POST /mcp
 // to local PH-MCP (or MCP_URL) with a staging fallback so live Run is same-origin.
 const http = require("http");
 const fs = require("fs");

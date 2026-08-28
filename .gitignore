@@ -2,7 +2,6 @@
 .DS_Store
 *.log
 .env
-.railway
 .wrangler/
 __pycache__/
 *.pyc
