@@ -1,21 +1,29 @@
 # MonstarX Philippines MCP — Playground
 
-A self-contained **live playground and docs site** for the MonstarX Philippines MCP (`ph-mcp`) server: **68 `ph_*` tools** (weather, earthquakes, geocoding, holidays, shelters, tourism, FX, HDX catalog, and more).
+A self-contained **live playground and docs site** for the [MonstarX Philippines MCP](../../Backend/PH-MCP) server: **68 `ph_*` tools** (weather, earthquakes, geocoding, holidays, shelters, tourism, FX, HDX catalog, and more).
 
 Same design system as the Japan / India MCP playgrounds — Philippines tools and data only.
 
 > 🔌 **MCP endpoint (staging):** `https://ph-mcp-staging.monstarxapp.com/mcp`  
-> Local: `http://localhost:8789/mcp` (from `PH-MCP` + `npm run dev`)
+> Local: `http://localhost:8789/mcp` (from `Backend/PH-MCP` + `npm run dev`)
 
 ---
 
-## Run locally
+## Run locally & deploy
 
 ```bash
 npm start           # serves public/ on http://localhost:8080  (respects $PORT)
 ```
 
-Live **Run** on this site posts to same-origin `/mcp`, which `server.js` proxies to local PH-MCP (`http://127.0.0.1:8789`, override with `MCP_URL`) and falls back to staging. Start the Worker with `npm run dev` in `../PH-MCP`. Direct browser calls to staging also work when that host is up (CORS is open on the Worker).
+Live **Run** on this site posts to same-origin `/mcp`, which `server.js` proxies to local PH MCP (`http://127.0.0.1:8789`, override with `MCP_URL`) and falls back to staging. Start the Worker with `npm run dev` in `Backend/PH-MCP`. Direct browser calls to staging also work when that host is up (CORS is open on the Worker).
+
+**Deploy to Cloudflare Pages** (same pattern as UAE / ID):
+
+```bash
+npm run build
+$env:CLOUDFLARE_ACCOUNT_ID="bf6b2bcb226d2847802880925b23f57e"
+npx wrangler pages deploy public --project-name ph-mcp-playground --branch main --commit-dirty=true
+```
 
 **Regenerate the page** after editing tool metadata or `build/build.py`:
 
